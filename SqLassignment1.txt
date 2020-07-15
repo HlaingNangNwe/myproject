@@ -1,0 +1,108 @@
+
+mysql> select* from Team;
++---------+-----------+-------------+
+| team_id | teamname  | foundeddate |
++---------+-----------+-------------+
+|       1 | ManU      | 2020-06-20  |
+|       2 | Arsenal   | 2020-06-20  |
+|       3 | Chelsea   | 2020-06-20  |
+|       4 | LiverPool | 2020-06-20  |
++---------+-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Player;
++-----------+-------------+---------+------+--------+--------+---------+
+| player_id | name        | jersyno | age  | salary | height | team_id |
++-----------+-------------+---------+------+--------+--------+---------+
+|         1 | Mg Mg       |       2 |   20 |  30000 | 120    |       1 |
+|         2 | Tin ko lwin |      10 |   20 |  20000 | 120    |       2 |
+|         3 | Hla win     |       8 |   20 |  30000 | 120    |       4 |
+|         4 | Hlaing Win  |       9 |   18 |  20000 | 120    |       3 |
+|         5 | Naing Win   |       6 |   11 |  20000 | 120    |       2 |
+|         6 | Naung       |       7 |   20 | 600000 | 120    |       4 |
+|         7 | Aung        |       4 |   20 | 700000 | 120    |       1 |
+|         8 | Min         |       3 |   20 | 800000 | 120    |       3 |
+|         9 | Win         |       3 |   35 | 700000 | 110    |       1 |
+|        10 | Naing       |       9 |   39 | 200000 | 90     |       2 |
++-----------+-------------+---------+------+--------+--------+---------+
+10 rows in set (0.01 sec)
+
+mysql> select Player.name from Player where Player.team_id='2';
++-------------+
+| name        |
++-------------+
+| Tin ko lwin |
+| Naing Win   |
+| Naing       |
++-------------+
+3 rows in set (0.01 sec)
+
+mysql> select Player.name from Player where Player.team_id='2';
++-------------+
+| name        |
++-------------+
+| Tin ko lwin |
+| Naing Win   |
+| Naing       |
++-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT Team.teamname,sum(Player.salary) AS TotalSalary FROM Player
+    -> LEFT JOIN Team ON Player.team_id = Team.team_id
+    -> GROUP BY teamname;
++-----------+-------------+
+| teamname  | TotalSalary |
++-----------+-------------+
+| ManU      |     1430000 |
+| Arsenal   |      240000 |
+| LiverPool |      630000 |
+| Chelsea   |      820000 |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select Player.name from Player where Player.height<'120';
++------+
+| name |
++------+
+| Win  |
++------+
+1 row in set (0.00 sec)
+
+mysql> select Team.teamname,(select AVG(salary) from Player where Player.team_id=Team.team_id) as AVGsalary
+    ->  from Team;
++-----------+-------------+
+| teamname  | AVGsalary   |
++-----------+-------------+
+| ManU      | 476666.6667 |
+| Arsenal   |  80000.0000 |
+| Chelsea   | 410000.0000 |
+| LiverPool | 315000.0000 |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select MAX(salary) As MaximumSalary,MIN(salary) As MiniSalary,Player.name from Player ;
++---------------+------------+-------+
+| MaximumSalary | MiniSalary | name  |
++---------------+------------+-------+
+|        800000 |      20000 | Mg Mg |
++---------------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select Player.name from Player where Player.age >'30' AND Player.salary >'200000';
++------+
+| name |
++------+
+| Win  |
++------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
